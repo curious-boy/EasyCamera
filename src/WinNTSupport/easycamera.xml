@@ -1,8 +1,8 @@
 <CONFIGURATION>
 	<SERVER>
 		<PREF NAME="connection_timeout" TYPE="UInt32" >0</PREF>
-		<PREF NAME="cms_addr" >cms.easydarwin.org</PREF>
-		<PREF NAME="cms_port" TYPE="UInt32" >10000</PREF>
+		<PREF NAME="cms_addr" >127.0.0.1</PREF>
+		<PREF NAME="cms_port" TYPE="UInt32" >60200</PREF>
 		<PREF NAME="maximum_connections" TYPE="SInt32" >10000</PREF>
 		<PREF NAME="maximum_bandwidth" TYPE="SInt32" >102400</PREF>
 		<PREF NAME="serial_number" >000000000001</PREF>
