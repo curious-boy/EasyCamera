@@ -40,9 +40,6 @@
 #include "EasyCMSAPI.h"
 #include "EasyMediaSource.h"
 
-using namespace std;
-using namespace EasyDarwin::libEasyCMS;
-
 class RTSPListenerSocket;
 
 class QTSServer : public QTSServerInterface
@@ -107,18 +104,18 @@ class QTSServer : public QTSServerInterface
         // Sets the IP address related attributes of the server.
         Bool16                  SetDefaultIPAddr();
 
-		EasyDarwinCMSAPI*		GetCMSApi();
+		Easy_CMS_Handle		GetCMSHandle() {return fCMSHandle; }
 
      private:
     
         //
         // GLOBAL TASKS
-		EasyMediaSource*			fCMSSession;
+		EasyMediaSource*			fMediaSource;
         static char*        sPortPrefString;
         static XMLPrefsParser* sPrefsSource;
         static PrefsSource* sMessagesSource;
 
-		EasyDarwinCMSAPI*	fCMSApi;
+		Easy_CMS_Handle	fCMSHandle;
         
         //
         // Module loading & unloading routines
