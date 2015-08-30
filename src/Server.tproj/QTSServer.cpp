@@ -233,7 +233,7 @@ void QTSServer::InitModules(QTSS_ServerState inEndState)
 
 void QTSServer::StartTasks()
 {
-	//TODO::在这里创建EasyCamera MsgCenter
+	//TODO::在这里创建libEasyCMS
 	char cmsIP[16] = { 0 };
 	if(QTSServerInterface::GetServer()->GetPrefs()->GetCMSIP(cmsIP))
 	{
@@ -530,8 +530,6 @@ void    QTSServer::LoadCompiledInModules()
 
 }
 
-
-
 void    QTSServer::InitCallbacks()
 {
     sCallbacks.addr[kNewCallback] =                 (QTSS_CallbackProcPtr)QTSSCallbacks::QTSS_New;
@@ -563,12 +561,6 @@ void    QTSServer::InitCallbacks()
     sCallbacks.addr[kSendRTSPHeadersCallback] =     (QTSS_CallbackProcPtr)QTSSCallbacks::QTSS_SendRTSPHeaders;
     sCallbacks.addr[kAppendRTSPHeadersCallback] =   (QTSS_CallbackProcPtr)QTSSCallbacks::QTSS_AppendRTSPHeader;
     sCallbacks.addr[kSendStandardRTSPCallback] =    (QTSS_CallbackProcPtr)QTSSCallbacks::QTSS_SendStandardRTSPResponse;
-
-    sCallbacks.addr[kAddRTPStreamCallback] =        (QTSS_CallbackProcPtr)QTSSCallbacks::QTSS_AddRTPStream;
-    sCallbacks.addr[kPlayCallback] =                (QTSS_CallbackProcPtr)QTSSCallbacks::QTSS_Play;
-    sCallbacks.addr[kPauseCallback] =               (QTSS_CallbackProcPtr)QTSSCallbacks::QTSS_Pause;
-    sCallbacks.addr[kTeardownCallback] =            (QTSS_CallbackProcPtr)QTSSCallbacks::QTSS_Teardown;
-    sCallbacks.addr[kRefreshTimeOutCallback] =      (QTSS_CallbackProcPtr)QTSSCallbacks::QTSS_RefreshTimeOut;
 
     sCallbacks.addr[kRequestEventCallback] =        (QTSS_CallbackProcPtr)QTSSCallbacks::QTSS_RequestEvent;
     sCallbacks.addr[kSetIdleTimerCallback] =        (QTSS_CallbackProcPtr)QTSSCallbacks::QTSS_SetIdleTimer;
@@ -613,7 +605,6 @@ void    QTSServer::InitCallbacks()
     
     sCallbacks.addr[kLockStdLibCallback] =                  (QTSS_CallbackProcPtr)QTSSCallbacks::QTSS_LockStdLib;
     sCallbacks.addr[kUnlockStdLibCallback] =                (QTSS_CallbackProcPtr)QTSSCallbacks::QTSS_UnlockStdLib;
-	sCallbacks.addr[kReflectRTPCallback] =					(QTSS_CallbackProcPtr)QTSSCallbacks::QTSS_ReflectRTPTrackData;
 	
 }
 
@@ -857,24 +848,14 @@ void QTSServer::DoInitRole()
             delete theModule;
         }
     }
-    this->SetupPublicHeader();
 
     OSThread::SetMainThreadData(NULL);
 }
 
-void QTSServer::SetupPublicHeader()
-{
-}
-
-
 Task*   RTSPListenerSocket::GetSessionTask(TCPSocket** outSocket)
 {
     Assert(outSocket != NULL);
-    
-    // when the server is behing a round robin DNS, the client needs to knwo the IP address ot the server
-    // so that it can direct the "POST" half of the connection to the same machine when tunnelling RTSP thru HTTP
-    Bool16  doReportHTTPConnectionAddress = QTSServerInterface::GetServer()->GetPrefs()->GetDoReportHTTPConnectionAddress();
-    
+     
 	return NULL;
     //RTSPSession* theTask = NEW RTSPSession(doReportHTTPConnectionAddress);
     //*outSocket = theTask->GetSocket();  // out socket is not attached to a unix socket yet.
@@ -897,11 +878,8 @@ Bool16 RTSPListenerSocket::OverMaxConnections(UInt32 buffer)
     if (maxConns > -1) // limit connections
     { 
         maxConns += buffer;
-        if  ( (theServer->GetNumRTPSessions() > (UInt32) maxConns) 
-              ||
-              ( theServer->GetNumRTSPSessions() + theServer->GetNumRTSPHTTPSessions() > (UInt32) maxConns ) 
-            )
-        {
+        if  ( theServer->GetNumRTSPSessions() > (UInt32) maxConns ) 
+		{
             overLimit = true;          
         }
     } 

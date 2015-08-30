@@ -497,45 +497,25 @@ enum
     qtssSvrState                    = 8,    //r/w   //QTSS_ServerState  //The current state of the server. If a module sets the server state, the server will respond in the appropriate fashion. Setting to qtssRefusingConnectionsState causes the server to refuse connections, setting to qtssFatalErrorState or qtssShuttingDownState causes the server to quit.
     qtssSvrIsOutOfDescriptors       = 9,    //read  //Bool16            //true if the server has run out of file descriptors, false otherwise
     qtssRTSPCurrentSessionCount     = 10,   //read  //UInt32            //Current number of connected clients over standard RTSP
-    qtssRTSPHTTPCurrentSessionCount = 11,   //read  //UInt32            //Current number of connected clients over RTSP / HTTP
+   
+    qtssSvrHandledMethods           = 11,   //r/w       //QTSS_RTSPMethod   //The methods that the server supports. Modules should append the methods they support to this attribute in their QTSS_Initialize_Role.
+    qtssSvrModuleObjects            = 12,   //read  // this IS PREMPTIVE SAFE!  //QTSS_ModuleObject // A module object representing each module
+    qtssSvrStartupTime              = 13,   //read      //QTSS_TimeVal  //Time the server started up
+    qtssSvrGMTOffsetInHrs           = 14,   //read      //SInt32        //Server time zone (offset from GMT in hours)
+    qtssSvrDefaultIPAddrStr         = 15,   //read      //char array    //The "default" IP address of the server as a string
 
-    qtssRTPSvrNumUDPSockets         = 12,   //read      //UInt32    //Number of UDP sockets currently being used by the server
-    qtssRTPSvrCurConn               = 13,   //read      //UInt32    //Number of clients currently connected to the server
-    qtssRTPSvrTotalConn             = 14,   //read      //UInt32    //Total number of clients since startup
-    qtssRTPSvrCurBandwidth          = 15,   //read      //UInt32    //Current bandwidth being output by the server in bits per second
-    qtssRTPSvrTotalBytes            = 16,   //read      //UInt64    //Total number of bytes served since startup
-    qtssRTPSvrAvgBandwidth          = 17,   //read      //UInt32    //Average bandwidth being output by the server in bits per second
-    qtssRTPSvrCurPackets            = 18,   //read      //UInt32    //Current packets per second being output by the server
-    qtssRTPSvrTotalPackets          = 19,   //read      //UInt64    //Total number of bytes served since startup
-    
-    qtssSvrHandledMethods           = 20,   //r/w       //QTSS_RTSPMethod   //The methods that the server supports. Modules should append the methods they support to this attribute in their QTSS_Initialize_Role.
-    qtssSvrModuleObjects            = 21,   //read  // this IS PREMPTIVE SAFE!  //QTSS_ModuleObject // A module object representing each module
-    qtssSvrStartupTime              = 22,   //read      //QTSS_TimeVal  //Time the server started up
-    qtssSvrGMTOffsetInHrs           = 23,   //read      //SInt32        //Server time zone (offset from GMT in hours)
-    qtssSvrDefaultIPAddrStr         = 24,   //read      //char array    //The "default" IP address of the server as a string
+    qtssSvrPreferences              = 16,   //read      //QTSS_PrefsObject  // An object representing each the server's preferences
+    qtssSvrMessages                 = 17,   //read      //QTSS_Object   // An object containing the server's error messages.
+    qtssSvrClientSessions           = 18,   //read      //QTSS_Object // An object containing all client sessions stored as indexed QTSS_ClientSessionObject(s).
+    qtssSvrCurrentTimeMilliseconds  = 19,   //read      //QTSS_TimeVal  //Server's current time in milliseconds. Retrieving this attribute is equivalent to calling QTSS_Milliseconds
+    qtssSvrCPULoadPercent           = 20,   //read      //Float32       //Current % CPU being used by the server
 
-    qtssSvrPreferences              = 25,   //read      //QTSS_PrefsObject  // An object representing each the server's preferences
-    qtssSvrMessages                 = 26,   //read      //QTSS_Object   // An object containing the server's error messages.
-    qtssSvrClientSessions           = 27,   //read      //QTSS_Object // An object containing all client sessions stored as indexed QTSS_ClientSessionObject(s).
-    qtssSvrCurrentTimeMilliseconds  = 28,   //read      //QTSS_TimeVal  //Server's current time in milliseconds. Retrieving this attribute is equivalent to calling QTSS_Milliseconds
-    qtssSvrCPULoadPercent           = 29,   //read      //Float32       //Current % CPU being used by the server
-
-    qtssSvrNumReliableUDPBuffers    = 30,   //read      //UInt32    //Number of buffers currently allocated for UDP retransmits
-    qtssSvrReliableUDPWastageInBytes= 31,   //read      //UInt32    //Amount of data in the reliable UDP buffers being wasted
-    qtssSvrConnectedUsers           = 32,   //r/w       //QTSS_Object   //List of connected user sessions (updated by modules for their sessions)
-    
-    qtssMP3SvrCurConn               = 33,   //r/w       //UInt32    //Number of MP3 client sessions connected
-    qtssMP3SvrTotalConn             = 34,   //r/w       //UInt32    //Total number of MP3  clients since startup
-    qtssMP3SvrCurBandwidth          = 35,   //r/w       //UInt32    //Current MP3 bandwidth being output by the server in bits per second
-    qtssMP3SvrTotalBytes            = 36,   //r/w       //UInt64    //Total number of MP3 bytes served since startup
-    qtssMP3SvrAvgBandwidth          = 37,   //r/w       //UInt32    //Average MP3 bandwidth being output by the server in bits per second
-
-    qtssSvrServerBuild              = 38,   //read      //char array //build of the server
-    qtssSvrServerPlatform           = 39,   //read      //char array //Platform (OS) of the server
-    qtssSvrRTSPServerComment        = 40,   //read      //char array //RTSP comment for the server header    
-    qtssSvrNumThinned               = 41,   //read      //SInt32    //Number of thinned sessions
-    qtssSvrNumThreads               = 42,   //read     //UInt32    //Number of task threads // see also qtssPrefsRunNumThreads
-    qtssSvrNumParams                = 43
+    qtssSvrServerBuild              = 21,   //read      //char array //build of the server
+    qtssSvrServerPlatform           = 22,   //read      //char array //Platform (OS) of the server
+    qtssSvrRTSPServerComment        = 23,   //read      //char array //RTSP comment for the server header    
+    qtssSvrNumThinned               = 24,   //read      //SInt32    //Number of thinned sessions
+    qtssSvrNumThreads               = 25,   //read     //UInt32    //Number of task threads // see also qtssPrefsRunNumThreads
+    qtssSvrNumParams                = 26
 };
 typedef UInt32 QTSS_ServerAttributes;
 
@@ -572,70 +552,25 @@ enum
     qtssPrefsErrorLogVerbosity      = 17,   //"error_logfile_verbosity"     //UInt32    //Max verbosity level of messages the error logger will log
     qtssPrefsScreenLogging          = 18,   //"screen_logging"              //Bool16        //Should the error logger echo messages to the screen?
     qtssPrefsErrorLogEnabled        = 19,   //"error_logging"               //Bool16        //Is error logging enabled?
-
-    qtssPrefsDropVideoAllPacketsDelayInMsec = 20,   //"drop_all_video_delay"    //SInt32 // Don't send video packets later than this
-    qtssPrefsStartThinningDelayInMsec       = 21,   //"start_thinning_delay"    //SInt32 // lateness at which we might start thinning
-    qtssPrefsLargeWindowSizeInK             = 22,   //"large_window_size"  // UInt32    //default size that will be used for high bitrate movies
-    qtssPrefsWindowSizeThreshold            = 23,   //"window_size_threshold"  // UInt32    //bitrate at which we switch to larger window size
     
-    qtssPrefsMinTCPBufferSizeInBytes        = 24,   //"min_tcp_buffer_size" //UInt32    // When streaming over TCP, this is the minimum size the TCP socket send buffer can be set to
-    qtssPrefsMaxTCPBufferSizeInBytes        = 25,   //"max_tcp_buffer_size" //UInt32    // When streaming over TCP, this is the maximum size the TCP socket send buffer can be set to
-    qtssPrefsTCPSecondsToBuffer             = 26,   //"tcp_seconds_to_buffer" //Float32 // When streaming over TCP, the size of the TCP send buffer is scaled based on the bitrate of the movie. It will fit all the data that gets sent in this amount of time.
+    qtssPrefsMinTCPBufferSizeInBytes        = 20,   //"min_tcp_buffer_size" //UInt32    // When streaming over TCP, this is the minimum size the TCP socket send buffer can be set to
+    qtssPrefsMaxTCPBufferSizeInBytes        = 21,   //"max_tcp_buffer_size" //UInt32    // When streaming over TCP, this is the maximum size the TCP socket send buffer can be set to
+    qtssPrefsTCPSecondsToBuffer             = 22,   //"tcp_seconds_to_buffer" //Float32 // When streaming over TCP, the size of the TCP send buffer is scaled based on the bitrate of the movie. It will fit all the data that gets sent in this amount of time.
     
-    qtssPrefsDoReportHTTPConnectionAddress  = 27,   //"do_report_http_connection_ip_address"    //Bool16    // when behind a round robin DNS, the client needs to be told the specific ip address of the maching handling its request. this pref tells the server to repot its IP address in the reply to the HTTP GET request when tunneling RTSP through HTTP
-
-    qtssPrefsLocalCameraAddress				= 28,   // "local_camera_addr" //char array   //
+    qtssPrefsLocalCameraAddress				= 23,   // "local_camera_addr" //char array   //
     
-    qtssPrefsRunUserName                    = 29,   //"run_user_name"       //char array        //Run under this user's account
-    qtssPrefsRunPassword                    = 30,   //"run_password"		//char array        //Run under this group's account
+    qtssPrefsRunUserName                    = 24,   //"run_user_name"       //char array        //Run under this user's account
+    qtssPrefsRunPassword                    = 25,   //"run_password"		//char array        //Run under this group's account
     
-    qtssPrefsSrcAddrInTransport             = 31,   //"append_source_addr_in_transport" // Bool16   //If true, the server will append the src address to the Transport header responses
-    qtssPrefsRTSPPorts                      = 32,   //"rtsp_ports"          // UInt16   
+	qtssPrefsRTSPPorts                      = 26,   //"rtsp_ports"          // UInt16   
 
-    qtssPrefsMaxRetransDelayInMsec          = 33,   //"max_retransmit_delay" // UInt32  //maximum interval between when a retransmit is supposed to be sent and when it actually gets sent. Lower values means smoother flow but slower server performance
-    qtssPrefsSmallWindowSizeInK             = 34,   //"small_window_size"  // UInt32    //default size that will be used for low bitrate movies
-    qtssPrefsAckLoggingEnabled              = 35,   //"ack_logging_enabled"  // Bool16  //Debugging only: turns on detailed logging of UDP acks / retransmits
-    qtssPrefsRTCPPollIntervalInMsec         = 36,   //"rtcp_poll_interval"      // UInt32   //interval (in Msec) between poll for RTCP packets
-    qtssPrefsRTCPSockRcvBufSizeInK          = 37,   //"rtcp_rcv_buf_size"   // UInt32   //Size of the receive socket buffer for udp sockets used to receive rtcp packets
-    qtssPrefsSendInterval                   = 38,   //"send_interval"  // UInt32    //
-    qtssPrefsThickAllTheWayDelayInMsec      = 39,   //"thick_all_the_way_delay"     // UInt32   //
-    qtssPrefsAltTransportIPAddr             = 40,   //"alt_transport_src_ipaddr"// char     //If empty, the server uses its own IP addr in the source= param of the transport header. Otherwise, it uses this addr.
-    qtssPrefsMaxAdvanceSendTimeInSec        = 41,   //"max_send_ahead_time"     // UInt32   //This is the farthest in advance the server will send a packet to a client that supports overbuffering.
-    qtssPrefsReliableUDPSlowStart           = 42,   //"reliable_udp_slow_start" // Bool16   //Is reliable UDP slow start enabled?
-    qtssPrefsAutoDeleteSDPFiles             = 43,   //"auto_delete_sdp_files"   // Bool16   //SDP files in the Movies directory tree are deleted after a Broadcaster's RTSP controlled SDP session ends. 
-    qtssPrefsAuthenticationScheme           = 44,   //"authentication_scheme" // char   //Set this to be the authentication scheme you want the server to use. "basic", "digest", and "none" are the currently supported values
-    qtssPrefsDeleteSDPFilesInterval         = 45,   //"sdp_file_delete_interval_seconds" //UInt32 //Feature rem
-    qtssPrefsAutoStart                      = 46,   //"auto_start" //Bool16 //If true, streaming server likes to be started at system startup
+	qtssPrefsRunNumThreads                  = 27,   //"run_num_threads" //UInt32 // if value is non-zero, will  create that many task threads; otherwise a thread will be created for each processor
+    qtssPrefsPidFile                        = 28,    //"pid_file" //Char Array //path to pid file
+    qtssPrefsCloseLogsOnWrite               = 29,   // "force_logs_close_on_write" //Bool16 // force log files to close after each write.
 
-    qtssPrefsDropAllPacketsDelayInMsec      = 47,   //"drop_all_packets_delay" // SInt32    // don't send any packets later than this
-    qtssPrefsThinAllTheWayDelayInMsec       = 48,   //"thin_all_the_way_delay" // SInt32    // thin to key frames
-    qtssPrefsAlwaysThinDelayInMsec          = 49,   //"always_thin_delay" // SInt32         // we always start to thin at this point
-    qtssPrefsStartThickingDelayInMsec       = 50,   //"start_thicking_delay" // SInt32      // maybe start thicking at this point
-    qtssPrefsQualityCheckIntervalInMsec     = 51,   //"quality_check_interval" // UInt32    // adjust thinnning params this often   
-    qtssPrefsEnableRTSPErrorMessage         = 52,   //"RTSP_error_message" //Bool16 // Appends a content body string error message for reported RTSP errors.
-    qtssPrefsEnableRTSPDebugPrintfs         = 53,   //"RTSP_debug_printfs" //Boo1l6 // printfs incoming RTSPRequests and Outgoing RTSP responses.
-
-    qtssPrefsEnableMonitorStatsFile         = 54,   //"enable_monitor_stats_file" //Bool16 //write server stats to the monitor file
-    qtssPrefsMonitorStatsFileIntervalSec    = 55,   //"monitor_stats_file_interval_seconds" // private
-    qtssPrefsMonitorStatsFileName           = 56,   //"monitor_stats_file_name" // private
-
-    qtssPrefsEnablePacketHeaderPrintfs      = 57,   // "enable_packet_header_printfs" //Bool16 // RTP and RTCP printfs of outgoing packets.
-    qtssPrefsPacketHeaderPrintfOptions      = 58,   // "packet_header_printf_options" //char //set of printfs to print. Form is [text option] [;]  default is "rtp;rr;sr;". This means rtp packets, rtcp sender reports, and rtcp receiver reports.
-    qtssPrefsOverbufferRate                 = 59,    // "overbuffer_rate"    //Float32
-    qtssPrefsMediumWindowSizeInK            = 60,    // "medium_window_size" // UInt32    //default size that will be used for medium bitrate movies
-    qtssPrefsWindowSizeMaxThreshold         = 61,    //"window_size_threshold"  // UInt32    //bitrate at which we switch from medium to large window size
-    qtssPrefsEnableRTSPServerInfo           = 62,   //"RTSP_server_info" //Boo1l6 // Adds server info to the RTSP responses.
-    qtssPrefsRunNumThreads                  = 63,   //"run_num_threads" //UInt32 // if value is non-zero, will  create that many task threads; otherwise a thread will be created for each processor
-    qtssPrefsPidFile                        = 64,    //"pid_file" //Char Array //path to pid file
-    qtssPrefsCloseLogsOnWrite               = 65,   // "force_logs_close_on_write" //Bool16 // force log files to close after each write.
-    qtssPrefsDisableThinning                = 66,   // "disable_thinning" //Bool16 // Usually used for performance testing. Turn off stream thinning from packet loss or stream lateness.
-    
-	qtssPrefsDefaultStreamQuality           = 67,   // "default_stream_quality //UInt16 //0 is all day and best quality. Higher values are worse maximum depends on the media and the media module
-
-	qtssPrefsEnableAllowGuestDefault        = 68,   // "enable_allow_guest_authorize_default" //Boo1l6 // server hint to access modules to allow guest access as the default (can be overriden in a qtaccess file or other means)
-    qtssPrefsNumRTSPThreads                 = 69,   // "run_num_rtsp_threads" //UInt32 // if value is non-zero, the server will  create that many task threads; otherwise a single thread will be created.
+	qtssPrefsNumRTSPThreads                 = 30,   // "run_num_rtsp_threads" //UInt32 // if value is non-zero, the server will  create that many task threads; otherwise a single thread will be created.
 	
-    qtssPrefsNumParams                      = 70
+    qtssPrefsNumParams                      = 31
 };
 
 typedef UInt32 QTSS_PrefsAttributes;
@@ -815,14 +750,6 @@ enum
     QTSS_RTSPSessionClosing_Role =   FOUR_CHARS_TO_INT('s', 'e', 's', 'c'), //sesc //RTSP session is going away
 
     QTSS_RTSPIncomingData_Role =     FOUR_CHARS_TO_INT('i', 'c', 'm', 'd'), //icmd //Incoming interleaved RTP data on this RTSP connection
-	QTSS_RTSPRelayingData_Role =     FOUR_CHARS_TO_INT('r', 'l', 'y', 'd'), //rlyd //Incoming interleaved RTP data on this RTSP connection
- 
-    //RTP-specific
-    QTSS_RTPSendPackets_Role =           FOUR_CHARS_TO_INT('s', 'e', 'n', 'd'), //send //Send RTP packets to the client
-    QTSS_ClientSessionClosing_Role =     FOUR_CHARS_TO_INT('d', 'e', 's', 's'), //dess //Client session is going away
-    
-    //RTCP-specific
-    QTSS_RTCPProcess_Role =          FOUR_CHARS_TO_INT('r', 't', 'c', 'p'), //rtcp //Process all RTCP packets sent to the server
 
     //File system roles
     QTSS_OpenFilePreProcess_Role =  FOUR_CHARS_TO_INT('o', 'p', 'p', 'r'),  //oppr
@@ -934,14 +861,6 @@ typedef struct
 
 } QTSS_IncomingData_Params;
 
-typedef struct 
-{
-    QTSS_RTSPSessionObject		inRTSPSession;
-	UInt8						inChannel;
-    char*                       inPacketData;
-    UInt16                      inPacketLen;
-} QTSS_RelayingData_Params;
-
 typedef struct
 {
     QTSS_RTSPSessionObject      inRTSPSession;
@@ -1028,10 +947,7 @@ typedef union
     QTSS_AdviseFile_Params              adviseFileParams;
     QTSS_ReadFile_Params                readFileParams;
     QTSS_CloseFile_Params               closeFileParams;
-    QTSS_RequestEventFile_Params        reqEventFileParams;
-
-	QTSS_RelayingData_Params			rtspRelayingDataParams;
-    
+    QTSS_RequestEventFile_Params        reqEventFileParams;    
 } QTSS_RoleParams, *QTSS_RoleParamPtr;
 
 typedef struct
@@ -1605,44 +1521,6 @@ QTSS_Error  QTSS_SendStandardRTSPResponse(QTSS_RTSPRequestObject inRTSPRequest, 
 
 
 /*****************************************/
-//  CLIENT SESSION CALLBACKS
-//
-//  QTSS API Modules have the option of generating and sending RTP packets. Only
-//  one module currently can generate packets for a particular session. In order
-//  to do this, call QTSS_AddRTPStream. This must be done in response to a RTSP
-//  request, and typically is done in response to a SETUP request from the client.
-//
-//  After one or more streams have been added to the session, the module that "owns"
-//  the packet sending for that session can call QTSS_Play to start the streams playing.
-//  After calling QTSS_Play, the module will get invoked in the QTSS_SendPackets_Role.
-//  Calling QTSS_Pause stops playing.
-//
-//  The "owning" module may call QTSS_Teardown at any time. Doing this closes the
-//  session and will cause the QTSS_SessionClosing_Role to be invoked for this session. 
-//
-//  Returns:    QTSS_NoErr
-//              QTSS_BadArgument: Bad argument
-//              QTSS_RequestFailed: QTSS_RTPStreamObject couldn't be created.
-QTSS_Error  QTSS_AddRTPStream(QTSS_ClientSessionObject inClientSession, QTSS_RTSPRequestObject inRTSPRequest, QTSS_RTPStreamObject* outStream, QTSS_AddStreamFlags inFlags);
-//
-//  Returns:    QTSS_NoErr
-//              QTSS_BadArgument: Bad argument
-//              QTSS_RequestFailed: No streams added to this session.
-QTSS_Error  QTSS_Play(QTSS_ClientSessionObject inClientSession, QTSS_RTSPRequestObject inRTSPRequest, QTSS_PlayFlags inPlayFlags);
-//
-//  Returns:    QTSS_NoErr
-//              QTSS_BadArgument: Bad argument
-QTSS_Error  QTSS_Pause(QTSS_ClientSessionObject inClientSession);
-//
-//  Returns:    QTSS_NoErr
-//              QTSS_BadArgument: Bad argument
-QTSS_Error  QTSS_Teardown(QTSS_ClientSessionObject inClientSession);
-
-//  Returns:    QTSS_NoErr
-//              QTSS_BadArgument: Bad argument
-QTSS_Error  QTSS_RefreshTimeOut(QTSS_ClientSessionObject inClientSession);
-
-/*****************************************/
 //  FILE SYSTEM CALLBACKS
 //
 //  All modules that interact with the local file system should use these APIs instead
@@ -1809,7 +1687,6 @@ QTSS_Error  QTSS_Authenticate(  const char* inAuthUserName,
 //                      QTSS_BadArgument
 QTSS_Error    QTSS_Authorize(QTSS_RTSPRequestObject inAuthRequestObject, char** outAuthRealm, Bool16* outAuthUserAllowed);
 
-QTSS_Error	QTSS_ReflectRTPData(QTSS_Object inObject, const char* inData, UInt32 inDataLen, UInt32 inTrackID);
 
 void        QTSS_LockStdLib();
 void        QTSS_UnlockStdLib();

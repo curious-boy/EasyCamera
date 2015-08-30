@@ -26,9 +26,6 @@
     File:       QTSS_Private.c
 
     Contains:   Code for stub library and stub callback functions.
-                    
-    
-    
 */
 
 #include <stdlib.h>
@@ -238,8 +235,6 @@ QTSS_Error  QTSS_Advise(QTSS_StreamRef inRef, UInt64 inPosition, UInt32 inAdvise
     return (sCallbacks->addr [kAdviseCallback]) (inRef, inPosition, inAdviseSize);      
 }
 
-
-
 // SERVICE ROUTINES
 
 QTSS_Error QTSS_AddService(const char* inServiceName, QTSS_ServiceFunctionPtr inFunctionPtr)
@@ -273,34 +268,6 @@ QTSS_Error QTSS_SendStandardRTSPResponse(QTSS_RTSPRequestObject inRTSPRequest, Q
 {
     return (sCallbacks->addr [kSendStandardRTSPCallback]) (inRTSPRequest, inRTPInfo, inFlags);      
 }
-
-// RTP ROUTINES
-
-QTSS_Error QTSS_AddRTPStream(QTSS_ClientSessionObject inClientSession, QTSS_RTSPRequestObject inRTSPRequest, QTSS_RTPStreamObject* outStream, QTSS_AddStreamFlags inFlags)
-{
-    return (sCallbacks->addr [kAddRTPStreamCallback]) (inClientSession, inRTSPRequest, outStream, inFlags);     
-}
-
-QTSS_Error QTSS_Play(QTSS_ClientSessionObject inClientSession, QTSS_RTSPRequestObject inRTSPRequest, QTSS_PlayFlags inPlayFlags)
-{
-    return (sCallbacks->addr [kPlayCallback]) (inClientSession, inRTSPRequest, inPlayFlags);        
-}
-
-QTSS_Error QTSS_Pause(QTSS_ClientSessionObject inClientSession)
-{
-    return (sCallbacks->addr [kPauseCallback]) (inClientSession);       
-}
-
-QTSS_Error QTSS_Teardown(QTSS_ClientSessionObject inClientSession)
-{
-    return (sCallbacks->addr [kTeardownCallback]) (inClientSession);        
-}
-
-QTSS_Error QTSS_RefreshTimeOut(QTSS_ClientSessionObject inClientSession)
-{
-    return (sCallbacks->addr [kRefreshTimeOutCallback]) (inClientSession);
-}
-
 
 // FILE SYSTEM ROUTINES
 
@@ -390,11 +357,6 @@ QTSS_Error  QTSS_Authenticate(  const char* inAuthUserName,
 QTSS_Error	QTSS_Authorize(QTSS_RTSPRequestObject inAuthRequestObject, char** outAuthRealm, Bool16* outAuthUserAllowed)
 {
     return (sCallbacks->addr [kAuthorizeCallback]) (inAuthRequestObject, outAuthRealm, outAuthUserAllowed);
-}
-
-QTSS_Error	QTSS_ReflectRTPData(QTSS_Object inObject, const char* inData, UInt32 inDataLen, UInt32 inTrackID)
-{
-	return (sCallbacks->addr [kReflectRTPCallback]) (inObject, inData, inDataLen, inTrackID);
 }
 
 void  QTSS_LockStdLib()
