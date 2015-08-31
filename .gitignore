@@ -16,3 +16,6 @@
 /src/dist/
 /src/CommonUtilitiesLib/build/
 [Pp]rivate*/
+
+# other
+*.opensdf
